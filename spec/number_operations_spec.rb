@@ -27,5 +27,11 @@ describe "numbers and operations" do
             expect(six(divided_by(two))).to eq 3
         end
     end
+
+    context "subtracting bigger from smaller" do
+        it "subtracts eight from five to return -3" do
+            expect(five(minus(eight))).to eq -3
+        end
+    end
 end
 
