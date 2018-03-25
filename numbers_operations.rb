@@ -10,62 +10,32 @@
 # Each calculation consist of exactly one operation and two numbers
 # The most outer function represents the left operand, the most inner function represents the right operand
 module NumbersOperations
+    
+    OPERATIONS = {
+        'plus': lambda { |a,b| b+a },
+        'minus': lambda { |a,b| b-a },
+        'times': lambda { |a,b| b*a },
+        'divided_by': lambda { |a,b| b/a }
+    }
 
-    # operands
-    def plus(num)
-        _add = lambda { |a,b| b+a }
-        _add.curry[num]
-    end
-
-    def minus(num)
-        _sub = lambda { |a,b| b-a }
-        _sub.curry[num]
-    end
-
-    def times(num)
-        _mul = lambda { |a,b| b*a }
-        _mul.curry[num]
-    end
-
-    def divided_by(num)
-        _div = lambda { |a,b| b/a }
-        _div.curry[num]
+    OPERATIONS.each do |meth, block|
+        define_method(meth) do |num|
+            _meth = block
+            _meth.curry[num]
+        end
     end
 
     # numbers
-    def one(oper=nil)
-        oper ? oper.curry[1] : 1
-    end
+    NUMBERS = {
+        'one': 1,   'two': 2,   'three': 3, 'four': 4,
+        'five': 5,  'six': 6,   'seven': 7, 'eight': 8,
+        'nine': 9
+    }
 
-    def two(oper=nil)
-        oper ? oper.curry[2] : 2
-    end
-
-    def three(oper=nil)
-        oper ? oper.curry[3] : 3
-    end
-
-    def four(oper=nil)
-        oper ? oper.curry[4] : 4
-    end
-
-    def five(oper=nil)
-        oper ? oper.curry[5] : 5
-    end
-
-    def six(oper=nil)
-        oper ? oper.curry[6] : 6
-    end
-    def seven(oper=nil)
-        oper ? oper.curry[7] : 7
-    end
-
-    def eight(oper=nil)
-        oper ? oper.curry[8] : 8
-    end
-
-    def nine(oper=nil)
-        oper ? oper.curry[9] : 9
+    NUMBERS.each do |num, val|
+        define_method(num) do |*arg|
+            arg && arg[0] ? arg[0].curry[val] : val
+        end
     end
 
 end
